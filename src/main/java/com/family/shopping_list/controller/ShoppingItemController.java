@@ -2,6 +2,7 @@ package com.family.shopping_list.controller;
 
 import com.family.shopping_list.model.ShoppingItem;
 import com.family.shopping_list.service.ShoppingItemService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +23,15 @@ public class ShoppingItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ShoppingItem> createItem(@RequestBody ShoppingItem item) {
+    public ResponseEntity<ShoppingItem> createItem(@Valid @RequestBody ShoppingItem item) {
         ShoppingItem created = service.createItem(item);
         return new ResponseEntity<>(created,HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ShoppingItem> getItemById(@PathVariable Long id) {
-        return service.getItemById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        ShoppingItem item = service.getItemById(id);
+        return ResponseEntity.ok(item);
     }
 
     @PutMapping("/{id}/toggle")
