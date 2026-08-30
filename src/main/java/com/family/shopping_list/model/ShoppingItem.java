@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 public class ShoppingItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Product title can't be empty")
     private String title;
